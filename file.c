@@ -5787,6 +5787,15 @@ rb_find_file_ext_safe(VALUE *filep, const char *const *ext, int safe_level)
 	expanded = 1;
     }
 
+    if (expanded && rb_is_absolute_path(f)) {
+		if (safe_level >= 1 && !fpath_check(fname)) {
+			rb_raise(rb_eSecurityError, "loading from unsafe path %s", f);
+		}
+		if (rb_file_load_ok(RSTRING_PTR(fname))) {
+			return 0;
+		}
+	}
+	
     if (expanded || rb_is_absolute_path(f) || is_explicit_relative(f)) {
 	if (safe_level >= 1 && !fpath_check(fname)) {
 	    rb_raise(rb_eSecurityError, "loading from unsafe path %s", f);
