@@ -3889,8 +3889,8 @@ rb_realpath_internal(VALUE basedir, VALUE path, int strict)
         FilePathValue(basedir);
         basedir = rb_str_dup_frozen(basedir);
     } else {
-		if (rb_file_load_ok(RSTRING_PTR(path))) {
-			return path;
+		if (rb_file_load_ok(RSTRING_PTR(unresolved_path))) {
+			return unresolved_path;
 		}
 	}
 
