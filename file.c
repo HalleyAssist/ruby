@@ -5787,10 +5787,11 @@ rb_find_file_ext_safe(VALUE *filep, const char *const *ext, int safe_level)
 	expanded = 1;
     }
 
-    if (expanded && rb_is_absolute_path(f)) {
+    if (rb_is_absolute_path(f)) {
 		if (safe_level >= 1 && !fpath_check(fname)) {
 			rb_raise(rb_eSecurityError, "loading from unsafe path %s", f);
 		}
+		if (!expanded) fname = file_expand_path_1(fname);
 		if (rb_file_load_ok(RSTRING_PTR(fname)) == 0) {
 			return 0;
 		}
