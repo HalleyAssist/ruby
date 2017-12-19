@@ -3888,7 +3888,11 @@ rb_realpath_internal(VALUE basedir, VALUE path, int strict)
     if (!NIL_P(basedir)) {
         FilePathValue(basedir);
         basedir = rb_str_dup_frozen(basedir);
-    }
+    } else {
+		if (rb_file_load_ok(RSTRING_PTR(path))) {
+			return path;
+		}
+	}
 
     RSTRING_GETMEM(unresolved_path, ptr, len);
     path_names = skipprefixroot(ptr, ptr + len, rb_enc_get(unresolved_path));
