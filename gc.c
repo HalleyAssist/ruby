@@ -4572,7 +4572,7 @@ gc_mark_imemo(rb_objspace_t *objspace, VALUE obj)
       case imemo_env:
 	{
 	    const rb_env_t *env = (const rb_env_t *)obj;
-	    GC_ASSERT(VM_ENV_ESCAPED_P(env->ep));
+	    assert(VM_ENV_ESCAPED_P(env->ep));
 	    gc_mark_and_pin_values(objspace, (long)env->env_size, env->env);
 	    VM_ENV_FLAGS_SET(env->ep, VM_ENV_FLAG_WB_REQUIRED);
 	    gc_mark_and_pin(objspace, (VALUE)rb_vm_env_prev_env(env));

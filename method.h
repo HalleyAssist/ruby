@@ -156,7 +156,7 @@ typedef struct rb_method_definition_struct {
 	rb_method_alias_t alias;
 	rb_method_refined_t refined;
 
-	const VALUE proc;                 /* should be marked */
+	VALUE proc;                 /* should be marked */
 	enum method_optimized_type {
 	    OPTIMIZED_METHOD_TYPE_SEND,
 	    OPTIMIZED_METHOD_TYPE_CALL,
