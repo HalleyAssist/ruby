@@ -1180,6 +1180,16 @@ rb_mark_generic_ivar(VALUE obj)
 }
 
 void
+rb_mv_generic_ivar(VALUE rsrc, VALUE dst)
+{
+    st_data_t key = (st_data_t)rsrc;
+    struct gen_ivtbl *ivtbl;
+
+    if (st_delete(generic_iv_tbl, &key, (st_data_t *)&ivtbl))
+	st_insert(generic_iv_tbl, (st_data_t)dst, (st_data_t)ivtbl);
+}
+
+void
 rb_free_generic_ivar(VALUE obj)
 {
     st_data_t key = (st_data_t)obj;
@@ -2738,6 +2748,7 @@ rb_define_const(VALUE klass, const char *name, VALUE val)
     if (!rb_is_const_id(id)) {
 	rb_warn("rb_define_const: invalid name `%s' for constant", name);
     }
+    rb_gc_register_mark_object(val);
     rb_const_set(klass, id, val);
 }
 
