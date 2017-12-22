@@ -762,7 +762,7 @@ list_id_table_foreach_with_replace(struct list_id_table *tbl, rb_id_table_foreac
 
     for (i=0; i<num; i++) {
 	const id_key_t key = keys[i];
-	enum rb_id_table_iterator_result ret = (*func)(key2id(key), values[i], data);
+	enum rb_id_table_iterator_result ret = (*func)(Qnil, values[i], data);
 	assert(key != 0);
 
 	FOREACH_LAST();
